@@ -23,11 +23,9 @@ public class SpringBootSensitiveClientApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        PersonRequest request = new PersonRequest("am", "amsidhlokhande@gmail.com", "pass123");
-        PersonResponse response = personClient.savePerson(request);
-        System.out.println(response);
-
-        PersonResponse fetchedResponse = personClient.getPersonByUsername("am");
+        PersonRequest request = new PersonRequest("amsidh", "amsidhlokhande@gmail.com", "password@1234");
+        PersonResponse fetchedResponse = personClient.savePerson(request);
         log.info("Response received {}", new ObjectMapper().writeValueAsString(fetchedResponse));
+
     }
 }
