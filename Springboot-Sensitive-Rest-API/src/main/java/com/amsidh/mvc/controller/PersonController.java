@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class PersonController {
 
+    //@DecryptBeforeValidation
     @PostMapping
     public PersonResponse savePerson(@RequestBody @Valid PersonRequest personRequest) {
         log.info("Inside savePerson method of class PersonController");
-        personRequest.decryptSensitiveData(); // Encrypt sensitive data
-
         final PersonResponse personResponse = PersonResponse.builder().username(personRequest.getUsername()).message(String
                         .format("Person with username %s is saved successfully", personRequest.getUsername()))
                 .build();
