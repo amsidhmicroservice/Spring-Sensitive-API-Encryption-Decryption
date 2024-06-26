@@ -1,5 +1,6 @@
 package com.amsidh.mvc.controller;
 
+import com.amsidh.mvc.annotation.DecryptBeforeValidation;
 import com.amsidh.mvc.model.PersonRequest;
 import com.amsidh.mvc.model.PersonResponse;
 import com.amsidh.mvc.util.CryptoUtil;
@@ -16,11 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class PersonController {
 
+    @DecryptBeforeValidation
     @PostMapping
     public PersonResponse savePerson(@RequestBody @Valid PersonRequest personRequest) {
-        log.info("Inside savePerson method of class PersonController");
-        personRequest.decryptSensitiveData(); // Encrypt sensitive data
-
+        log.info("Inside savePerson method of class PersonController. Saving Person with details {}", personRequest.toString());
         final PersonResponse personResponse = PersonResponse.builder().username(personRequest.getUsername()).message(String
                         .format("Person with username %s is saved successfully", personRequest.getUsername()))
                 .build();

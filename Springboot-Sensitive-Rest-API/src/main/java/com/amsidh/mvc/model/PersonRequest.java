@@ -16,6 +16,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Builder
 public class PersonRequest implements Serializable {
+
     @NotNull
     @NotBlank
     @Size(min = 3, max = 100)
@@ -28,11 +29,6 @@ public class PersonRequest implements Serializable {
     @NotBlank
     @Size(min = 8, max = 50)
     private String password;
-
-    public void encryptSensitiveData() {
-        this.username = CryptoUtil.encrypt(this.username);
-        this.password = CryptoUtil.encrypt(this.password);
-    }
 
     public void decryptSensitiveData() {
         this.username = CryptoUtil.decrypt(this.username);

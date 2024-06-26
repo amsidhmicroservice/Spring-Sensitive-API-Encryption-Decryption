@@ -19,7 +19,4 @@ public class PersonResponse implements Serializable {
         this.username = CryptoUtil.encrypt(this.username);
     }
 
-    public void decryptSensitiveData() {
-        this.username = CryptoUtil.decrypt(this.username);
-    }
 }
