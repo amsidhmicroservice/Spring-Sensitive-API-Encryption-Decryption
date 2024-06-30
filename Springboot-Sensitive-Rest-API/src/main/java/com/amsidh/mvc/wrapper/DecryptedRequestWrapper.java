@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DecryptedRequestWrapper extends HttpServletRequestWrapper {
     private final String decryptedRequestBody;
-    private final Set<String> decryptedAttributes = Set.of("username", "emailId", "password");
+    private final Set<String> decryptedAttributes = Set.of("username");
 
     public DecryptedRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
