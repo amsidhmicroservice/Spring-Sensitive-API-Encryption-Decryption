@@ -148,6 +148,6 @@ public class DecryptedRequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String decrypt(String encryptedData) {
-        return EncryptDecryptUtil.decrypt(Base64.getDecoder().decode(encryptedData));
+        return EncryptDecryptUtil.decrypt(encryptedData);
     }
 }

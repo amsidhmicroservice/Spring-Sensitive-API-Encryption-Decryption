@@ -34,7 +34,7 @@ public class PersonController {
     @GetMapping("/{username}")
     public PersonResponse getPersonByPersonId(@PathVariable(name = "username") String username) {
         log.info("Inside getPersonByPersonId method of class PersonController");
-        username = EncryptDecryptUtil.decrypt(username.getBytes());
+        username = EncryptDecryptUtil.decrypt(username);
         PersonResponse response = PersonResponse.builder().username(username).message(String
                         .format("Person with username %s is found and returned successfully", username))
                 .build();

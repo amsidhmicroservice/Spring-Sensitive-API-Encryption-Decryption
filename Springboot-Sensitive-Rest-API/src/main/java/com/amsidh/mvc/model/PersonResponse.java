@@ -16,7 +16,7 @@ public class PersonResponse implements Serializable {
     private String username;
     private String message;
 
-    public void encryptSensitiveData() throws Exception {
-        this.username = Base64.getEncoder().encodeToString(EncryptDecryptUtil.encrypt(this.username));
+    public void encryptSensitiveData() {
+        this.username = EncryptDecryptUtil.encrypt(this.username);
     }
 }
