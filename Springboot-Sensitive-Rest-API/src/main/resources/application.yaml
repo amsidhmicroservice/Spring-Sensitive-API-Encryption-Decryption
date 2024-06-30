@@ -1,0 +1,6 @@
+rsa:
+  private-key: classpath:rsa/privateKey.pem
+  public-key: classpath:rsa/publicKey.pem
+
+decryptedAttributes: username,emailId,password
+urlsToDecrypt: /person

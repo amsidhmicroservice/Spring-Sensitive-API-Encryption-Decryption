@@ -1,7 +1,5 @@
 package com.amsidh.mvc.model;
 
-import com.amsidh.mvc.annotation.Decrypt;
-import com.amsidh.mvc.util.CryptoUtil;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +16,6 @@ import java.io.Serializable;
 @Builder
 public class PersonRequest implements Serializable {
 
-    @Decrypt
     @NotNull
     @NotBlank
     @Size(min = 3, max = 100)
@@ -27,7 +24,6 @@ public class PersonRequest implements Serializable {
     @Email
     private String emailId;
 
-    @Decrypt
     @NotNull
     @NotBlank
     @Size(min = 8, max = 50)
