@@ -24,11 +24,19 @@ import java.util.Base64;
 @Slf4j
 public class EncryptDecryptUtil {
 
+    //private static final String ALGORITHM = "RSA"; //This support padding of RSA/RSA/ECB/PKCS1Padding/RSA/ECB/OAEPWithSHA-1AndMGF1Padding but not RSA/ECB/OAEPWithSHA-256AndMGF1Padding.
+
+    // To support padding of RSA/ECB/OAEPWithSHA-256AndMGF1Padding, we need to add this specifically.
     private static final String ALGORITHM = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
     private static final String PROVIDER = "BC";
 
     private static Resource PRIVATE_KEY_RESOURCE;
     private static Resource PUBLIC_KEY_RESOURCE;
+
+    static {
+        // Add BouncyCastle as a security provider
+        java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+    }
 
     private static PrivateKey loadPrivateKey() throws IOException {
         PEMParser pemParser = new PEMParser(new FileReader(PRIVATE_KEY_RESOURCE.getFile().getAbsolutePath()));
@@ -63,7 +71,8 @@ public class EncryptDecryptUtil {
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, loadPrivateKey());
-            return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedMessage)));
+            byte[] decodedMessage = Base64.getDecoder().decode(encryptedMessage);
+            return new String(cipher.doFinal(decodedMessage));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException |
                  BadPaddingException | IOException e) {
             log.info("Unable to decrypt {}", e.getMessage(), e);
