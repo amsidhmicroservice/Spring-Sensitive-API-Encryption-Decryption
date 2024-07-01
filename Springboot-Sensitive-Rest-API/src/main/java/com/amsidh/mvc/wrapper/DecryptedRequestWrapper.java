@@ -22,7 +22,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;

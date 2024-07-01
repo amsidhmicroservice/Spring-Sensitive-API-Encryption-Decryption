@@ -4,10 +4,12 @@ import com.amsidh.mvc.wrapper.DecryptedRequestWrapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Set;
 
+@Component
 @RequiredArgsConstructor
 public class DecryptRequestFilter implements Filter {
 
