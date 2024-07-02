@@ -6,6 +6,7 @@ import com.amsidh.mvc.util.EncryptDecryptUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class PersonController {
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public PersonResponse savePerson(@RequestBody @Valid PersonRequest personRequest) {
         log.info("Inside savePerson method of class PersonController");
-        final PersonResponse personResponse = PersonResponse.builder().username(personRequest.getUsername()).message(String
-                        .format("Person with username %s is saved successfully", personRequest.getUsername()))
+        final PersonResponse personResponse = PersonResponse.builder()
+                .username(personRequest.getUsername())
+                .message(String.format("Person with username %s is saved successfully", personRequest.getUsername()))
                 .build();
         try {
             personResponse.encryptSensitiveData(); // Encrypt sensitive data
@@ -31,7 +34,8 @@ public class PersonController {
         return personResponse;
     }
 
-    @GetMapping("/{username}")
+    @GetMapping(value = "/{username}",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public PersonResponse getPersonByPersonId(@PathVariable(name = "username") String username) {
         log.info("Inside getPersonByPersonId method of class PersonController");
         username = EncryptDecryptUtil.decrypt(username);
