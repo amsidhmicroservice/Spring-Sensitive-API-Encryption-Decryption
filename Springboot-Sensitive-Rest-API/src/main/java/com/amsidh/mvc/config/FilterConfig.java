@@ -24,7 +24,7 @@ public class FilterConfig {
         FilterRegistrationBean<EncryptResponseFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(encryptResponseFilter);
         registrationBean.addUrlPatterns("/persons"); // Apply filter to specific URL patterns
-        registrationBean.setOrder(100); // Ensure it runs after other filters
+        registrationBean.setOrder(10); // Ensure it runs after other filters
         return registrationBean;
     }
 
