@@ -1,23 +1,31 @@
 package com.amsidh.mvc.config;
 
 import com.amsidh.mvc.filter.DecryptRequestFilter;
-import lombok.RequiredArgsConstructor;
+import com.amsidh.mvc.filter.EncryptResponseFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@RequiredArgsConstructor
 @Configuration
 public class FilterConfig {
 
+    @Bean(name = "decryptRequestFilterRegistrationBean")
+    public FilterRegistrationBean<DecryptRequestFilter> newFilterRegistration(DecryptRequestFilter decryptRequestFilter) {
+        FilterRegistrationBean<DecryptRequestFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(decryptRequestFilter);
+        registration.addUrlPatterns("/persons");
+        registration.setOrder(1);
+        return registration;
+    }
 
-    private final DecryptRequestFilter decryptRequestFilter;
-    @Bean
-    public FilterRegistrationBean<DecryptRequestFilter> decryptRequestFilterRegistration() {
-        FilterRegistrationBean<DecryptRequestFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(decryptRequestFilter);
-        registrationBean.addUrlPatterns("/*"); // Add URL patterns as needed
-        registrationBean.setOrder(1); // Set the order if necessary
+    @Bean(name = "encryptResponseFilterRegistrationBean")
+    public FilterRegistrationBean<EncryptResponseFilter> encryptResponseFilter(EncryptResponseFilter encryptResponseFilter) {
+        FilterRegistrationBean<EncryptResponseFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(encryptResponseFilter);
+        registrationBean.addUrlPatterns("/persons"); // Apply filter to specific URL patterns
+        registrationBean.setOrder(100); // Ensure it runs after other filters
         return registrationBean;
     }
+
 }

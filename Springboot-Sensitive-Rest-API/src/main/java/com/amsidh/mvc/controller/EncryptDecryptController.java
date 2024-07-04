@@ -1,6 +1,6 @@
 package com.amsidh.mvc.controller;
 
-import com.amsidh.mvc.util.EncryptDecryptUtil;
+import com.amsidh.mvc.util.HybridEncryptionDecryptionUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,12 +12,12 @@ public class EncryptDecryptController {
 
     @PostMapping(value = "/encrypt", consumes = {MediaType.TEXT_PLAIN_VALUE})
     public String encryptMessage(@RequestBody String message) {
-        return EncryptDecryptUtil.encrypt(message);
+        return HybridEncryptionDecryptionUtil.encrypt(message);
     }
 
     @PostMapping(value = "/decrypt", consumes = {MediaType.TEXT_PLAIN_VALUE})
     public String decryptMessage(@RequestBody String message) {
-        return EncryptDecryptUtil.decrypt(message);
+        return HybridEncryptionDecryptionUtil.decrypt(message);
     }
 
 

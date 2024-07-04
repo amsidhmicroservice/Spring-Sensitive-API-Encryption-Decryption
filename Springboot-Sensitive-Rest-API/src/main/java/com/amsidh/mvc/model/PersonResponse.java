@@ -1,6 +1,5 @@
 package com.amsidh.mvc.model;
 
-import com.amsidh.mvc.util.EncryptDecryptUtil;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -25,7 +24,4 @@ public class PersonResponse implements Serializable {
     @XmlElement(name = "message")
     private String message;
 
-    public void encryptSensitiveData() {
-        this.username = EncryptDecryptUtil.encrypt(this.username);
-    }
 }

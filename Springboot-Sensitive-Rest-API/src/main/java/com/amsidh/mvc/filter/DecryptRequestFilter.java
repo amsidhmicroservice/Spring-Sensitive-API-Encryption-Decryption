@@ -1,37 +1,27 @@
 package com.amsidh.mvc.filter;
 
-import com.amsidh.mvc.wrapper.DecryptedRequestWrapper;
+import com.amsidh.mvc.wrapper.DecryptRequestWrapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Set;
 
-@Component
 @RequiredArgsConstructor
+@Component
+@Slf4j
 public class DecryptRequestFilter implements Filter {
 
-    private final Set<String> urlsToDecrypt = Set.of("/persons");
-
-
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-        if (request instanceof HttpServletRequest httpRequest) {
-            String requestURI = httpRequest.getRequestURI();
-            // Check if the request URI matches the URLs that need decryption
-            if (shouldDecryptRequest(requestURI)) {
-                chain.doFilter(new DecryptedRequestWrapper(httpRequest), response); // Use injected DecryptedRequestWrapper
-            } else {
-                chain.doFilter(request, response);
-            }
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        if (servletRequest instanceof HttpServletRequest httpServletRequest) {
+            String requestURI = httpServletRequest.getRequestURI();
+            // Check if the request URI matches the URIs that need decryption
+            log.info("Decrypting the request with requestURI {}", requestURI);
+            filterChain.doFilter(new DecryptRequestWrapper(httpServletRequest), servletResponse);
         }
     }
 
-    private boolean shouldDecryptRequest(String requestURI) {
-        return urlsToDecrypt.stream().anyMatch(requestURI::startsWith);
-    }
 }
-
